@@ -4,7 +4,6 @@ import formStyles from "../../../styles/Form.module.scss";
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 
-
 const CreateNewBook = (props) => {
     //const navigate = useNavigate();
     
@@ -14,7 +13,7 @@ const CreateNewBook = (props) => {
         journal_name: '',
         pubYear: '',
         volume: '',
-        number: '',
+        number: '', 
         pages: '',
         DOI: '',
     });
@@ -33,6 +32,7 @@ const CreateNewBook = (props) => {
         axios
             .post('http://localhost:8082/api/books', book)
             .then((res) => {
+              
                 setNewBook({
                     title:'',
                     authors: '',
@@ -43,10 +43,11 @@ const CreateNewBook = (props) => {
                     pages: '',
                     DOI: '',
                 });
-
+                
                 //navigate('/');
             });
         } catch (error) {
+          window.alert(error);
             console.log("Cannot add book");
         }
             
@@ -145,14 +146,14 @@ const CreateNewBook = (props) => {
                       onChange={onChange}
                     />
                   </div>
-
+                  <input
+                type='submit'
+                className={formStyles.buttonItem} 
+                onClick={onSubmit}/>
             </form>
         </div>
         
-        <input
-                type='submit'
-                className={formStyles.buttonItem} 
-                onClick={onSubmit}/></>
+        </>
     )
 
     };

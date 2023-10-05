@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 // Load Book model
-const Book = require('../../models/Books');
+const Book = require('../../models/Book');
 
 // @route GET api/books/test
 // @description tests books route
@@ -25,7 +25,7 @@ router.get('/:id', (req, res) => {
   Book.findById(req.params.id)
     .then(book => res.json(book))
     .catch(err => res.status(404).json({ nobookfound: 'No Book found' }));
-});
+}); 
 
 // @route GET api/books
 // @description add/save book

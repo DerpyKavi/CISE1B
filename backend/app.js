@@ -4,6 +4,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const axios = require('axios');
 
 // Create an Express app
 const app = express();
@@ -23,6 +24,7 @@ mongoose
   })
   .then(() => {
     console.log('Connected to MongoDB');
+    
   })
   .catch((error) => {
     console.error('MongoDB connection error:', error);
@@ -31,12 +33,13 @@ mongoose
 // Define a Mongoose schema and model for your data
 const bookSchema = new mongoose.Schema({
   title: String,
-  isbn: String,
-  author: String,
-  description: String,
+  authors: String,
+  journal_name: String,
   published_date: Date,
-  publisher: String,
-  updated_date: { type: Date, default: Date.now },
+  volume: String,
+  number: String,
+  pages: String,
+  DOI: String,
 });
 
 const Book = mongoose.model('Book', bookSchema);
@@ -50,6 +53,20 @@ app.get('/api/books', async (req, res) => {
     console.error('Error fetching books:', error);
     res.status(500).json({ error: 'An error occurred while fetching books' });
   }
+});
+
+// Define a route for posting books
+app.post('/api/books', async (req, res) => {
+  try {
+    Book.create(req.body)
+    .then(book => res.json({ msg: 'Book added successfully' }))
+    .catch(err => res.status(400).json({ error: 'Unable to add this book' }));
+
+
+  } catch (error) {
+    console.error('Error fetching books:', error);
+    res.status(500).json({ error: 'An error occurred while posting books' });
+  } 
 });
 
 // Start the server

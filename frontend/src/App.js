@@ -8,10 +8,7 @@ const App = () => {
     <Router>
       <div>
         <Routes>
-          <Route exact path='/' element={<ShowBookList />} />
-          <Route path='/create-book' element={<CreateNewBook />} />
-          <Route path='/edit-book/:id' element={<UpdateBookInfo />} />
-          <Route path='/show-book/:id' element={<ShowBookDetails />} />
+        <Route exact path='/create-book' element={<CreateNewBook />} />
         </Routes>
       </div>
     </Router>
