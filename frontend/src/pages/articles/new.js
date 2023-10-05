@@ -1,11 +1,13 @@
 import { FormEvent, useState } from "react";
-import { Link } from 'react-router-dom';
+
 import formStyles from "../../../styles/Form.module.scss";
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 
+
 const CreateNewBook = (props) => {
-    const navigate = useNavigate();
+    //const navigate = useNavigate();
+    
     const [book, setNewBook] = useState({
         title: '',
         authors: '',
@@ -18,12 +20,15 @@ const CreateNewBook = (props) => {
     });
 
     const onChange = (event) => {
-        setNewBook({ ...book, [event.target.name]: e.target.value});
+        setNewBook({ ...book, [event.target.name]: event.target.value});
+        
     };
 
     const onSubmit = async (event) => {
+        try {
+            
         event.preventDefault();
-
+        
         //use axios to send the submitted book to mongodb
         axios
             .post('http://localhost:8082/api/books', book)
@@ -39,30 +44,20 @@ const CreateNewBook = (props) => {
                     DOI: '',
                 });
 
-                navigate('/');
+                //navigate('/');
             });
-            
+        } catch (error) {
+            console.log("Cannot add book");
+        }
             
     };
 
-    
-    //code containing the form for the site
     return (
-        
-        <div className='CreateNewBook'>
-          <div className='container'>
-            <div className='row'>
-              <div className={formStyles.form}>
-                <br />
-                <Link to='/' className='btn btn-outline-warning float-left'>
-                  Show BooK List
-                </Link>
-              </div>
-              <div className='col-md-8 m-auto'>
-                <h1 className='display-4 text-center'>Add Book</h1>
-                <p className='lead text-center'>Create new book</p>
-    
-                <form noValidate onSubmit={onSubmit}>
+
+        <><div className="container">
+            
+            <h1>New Article</h1>
+            <form noValidate onSubmit={onSubmit}>
                   <div className='form-group'>
                     <input
                       type='text'
@@ -73,13 +68,12 @@ const CreateNewBook = (props) => {
                       onChange={onChange}
                     />
                   </div>
-                  <br />
-    
+
                   <div className='form-group'>
                     <input
                       type='text'
                       placeholder='Authors'
-                      name='Authors'
+                      name='authors'
                       className={formStyles.formItem}
                       value={book.authors}
                       onChange={onChange}
@@ -90,7 +84,7 @@ const CreateNewBook = (props) => {
                     <input
                       type='text'
                       placeholder='Journal Name'
-                      name='Journal Name'
+                      name='journal_name'
                       className={formStyles.formItem}
                       value={book.journal_name}
                       onChange={onChange}
@@ -101,7 +95,7 @@ const CreateNewBook = (props) => {
                     <input
                       type='date'
                       placeholder='Year of Publication'
-                      name='Year of Publication'
+                      name='pubYear'
                       className={formStyles.formItem}
                       value={book.pubYear}
                       onChange={onChange}
@@ -151,18 +145,17 @@ const CreateNewBook = (props) => {
                       onChange={onChange}
                     />
                   </div>
-                  <input
-                    type='submit'
-                    className={formStyles.buttonItem}
-                  />
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      );
 
-};
+            </form>
+        </div>
+        
+        <input
+                type='submit'
+                className={formStyles.buttonItem} 
+                onClick={onSubmit}/></>
+    )
+
+    };
 
 export default CreateNewBook;
     
@@ -322,3 +315,167 @@ console.log(
     </div>
   );
 */
+
+
+
+
+/*
+
+//const navigate = useNavigate();
+    const [book, setNewBook] = useState({
+        title: '',
+        authors: '',
+        journal_name: '',
+        pubYear: '',
+        volume: '',
+        number: '',
+        pages: '',
+        DOI: '',
+    });
+
+    const onChange = (event) => {
+        setNewBook({ ...book, [event.target.name]: e.target.value});
+    };
+
+    const onSubmit = async (event) => {
+        event.preventDefault();
+
+        //use axios to send the submitted book to mongodb
+        axios
+            .post('http://localhost:8082/api/books', book)
+            .then((res) => {
+                setNewBook({
+                    title:'',
+                    authors: '',
+                    journal_name: '',
+                    pubYear: '',
+                    volume: '',
+                    number: '',
+                    pages: '',
+                    DOI: '',
+                });
+
+     //           navigate('/');
+            });
+            
+            
+    };
+
+    
+    //code containing the form for the site
+    return (
+        
+        <div className='CreateNewBook'>
+          <div className='container'>
+            <div className='row'>
+              <div className={formStyles.form}>
+                <br />
+                <Link to='/' className='btn btn-outline-warning float-left'>
+                  Show BooK List
+                </Link>
+              </div>
+              <div className='col-md-8 m-auto'>
+                <h1 className='display-4 text-center'>Add Book</h1>
+                <p className='lead text-center'>Create new book</p>
+    
+                <form noValidate onSubmit={onSubmit}>
+                  <div className='form-group'>
+                    <input
+                      type='text'
+                      placeholder='Title'
+                      name='title'
+                      className={formStyles.formItem}
+                      value={book.title}
+                      onChange={onChange}
+                    />
+                  </div>
+                  <br />
+    
+                  <div className='form-group'>
+                    <input
+                      type='text'
+                      placeholder='Authors'
+                      name='Authors'
+                      className={formStyles.formItem}
+                      value={book.authors}
+                      onChange={onChange}
+                    />
+                  </div>
+    
+                  <div className='form-group'>
+                    <input
+                      type='text'
+                      placeholder='Journal Name'
+                      name='Journal Name'
+                      className={formStyles.formItem}
+                      value={book.journal_name}
+                      onChange={onChange}
+                    />
+                  </div>
+    
+                  <div className='form-group'>
+                    <input
+                      type='date'
+                      placeholder='Year of Publication'
+                      name='Year of Publication'
+                      className={formStyles.formItem}
+                      value={book.pubYear}
+                      onChange={onChange}
+                    />
+                  </div>
+    
+                  <div className='form-group'>
+                    <input
+                      type='text'
+                      placeholder='volume'
+                      name='volume'
+                      className={formStyles.formItem}
+                      value={book.volume}
+                      onChange={onChange}
+                    />
+                  </div>
+
+                  <div className='form-group'>
+                    <input
+                      type='text'
+                      placeholder='number'
+                      name='number'
+                      className={formStyles.formItem}
+                      value={book.number}
+                      onChange={onChange}
+                    />
+                  </div>
+
+                  <div className='form-group'>
+                    <input
+                      type='text'
+                      placeholder='pages'
+                      name='pages'
+                      className={formStyles.formItem}
+                      value={book.pages}
+                      onChange={onChange}
+                    />
+                  </div>
+    
+                  <div className='form-group'>
+                    <input
+                      type='text'
+                      placeholder='DOI'
+                      name='DOI'
+                      className={formStyles.formItem}
+                      value={book.DOI}
+                      onChange={onChange}
+                    />
+                  </div>
+                  <input
+                    type='submit'
+                    className={formStyles.buttonItem}
+                  />
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+
+      */
