@@ -8,6 +8,7 @@ const CreateNewBook = (props) => {
     //const navigate = useNavigate();
     
     const [book, setNewBook] = useState({
+        
         title: '',
         authors: '',
         journal_name: '',
@@ -56,7 +57,7 @@ const CreateNewBook = (props) => {
     return (
 
         <><div className="container">
-            
+          
             <h1>New Article</h1>
             <form noValidate onSubmit={onSubmit}>
                   <div className='form-group'>

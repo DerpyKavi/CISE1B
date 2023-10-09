@@ -2,6 +2,9 @@
 const mongoose = require('mongoose');
 
 const BookSchema = new mongoose.Schema({
+  
+  title: 'TestingTitle',
+        
   title: {
     type: String,
     required: true
@@ -34,6 +37,14 @@ const BookSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+
+  Total_Reviews: {
+    type: Number,
+  },
+
+  Rating: {
+    type: Number,
+  }, 
 });
 
 module.exports = Book = mongoose.model('book', BookSchema);
