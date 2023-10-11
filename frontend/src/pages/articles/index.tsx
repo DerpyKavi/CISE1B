@@ -13,10 +13,13 @@ interface ArticlesInterface {
     evidence: string;
     researchType: string;
     participantType: string;
+
+    
   }
   
   type ArticlesProps = {
     articles: ArticlesInterface[];
+
   };
   
   const defaultColumnsToShow = [
@@ -56,6 +59,18 @@ interface ArticlesInterface {
       columnsToShow.includes(header.key)
     );
   
+    //displaying table data from dummydata
+    const articledata = data.articles.map((article) => ({
+          id: article.id ?? article._id,
+          title: article.title,
+          authors: article.authors,
+          source: article.source,
+          pubyear: article.pubyear,
+          doi: article.doi,
+          claim: article.claim,
+          evidence: article.evidence,
+        }));
+
     return (
       <div className="container">
         <h1>Articles Index Page</h1>
@@ -72,9 +87,9 @@ interface ArticlesInterface {
             </label>
           ))}
         </div>
-        <SortableTable headers={filteredHeaders} data={articles} />
+        <SortableTable headers={filteredHeaders} data={articledata} />
       </div>
     );
   };
-  
+
   export default Articles;
