@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import { GetStaticProps, NextPage } from "next";
 import SortableTable from "../../components/table/SortableTable";
 import data from "../../utils/dummydata.json";
+import SearchBar from "@/components/nav/SearchBar";
 
 interface ArticlesInterface {
     id: string;
@@ -69,7 +70,10 @@ interface ArticlesInterface {
           doi: article.doi,
           claim: article.claim,
           evidence: article.evidence,
+          display: true,
         }));
+
+      const [articleaDta, setArticle] = useState(articledata);
 
     return (
       <div className="container">
@@ -87,7 +91,8 @@ interface ArticlesInterface {
             </label>
           ))}
         </div>
-        <SortableTable headers={filteredHeaders} data={articledata} />
+        <SearchBar tableData={articleaDta} updateData={setArticle} />
+        <SortableTable headers={filteredHeaders} data={articleaDta} />
       </div>
     );
   };

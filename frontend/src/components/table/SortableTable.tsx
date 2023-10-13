@@ -21,13 +21,15 @@ const SortableTable: React.FC<SortableTableProps> = ({ headers, data }) => {
         </tr>
       </thead>
       <tbody>
-        {data.map((row, i) => (
-          <tr key={i}>
-            {headers.map((header) => (
-              <td key={header.key}>{row[header.key]}</td>
-            ))}
+        {data.map((row, i) => {
+          if (row.display) {
+            return (
+              <tr key={i}>
+                {headers.map((header) => (
+                  <td key={header.key}>{row[header.key]}</td>
+                ))}
           </tr>
-        ))}
+      )}})}
       </tbody>
     </table>
   );

@@ -1,12 +1,17 @@
 // SearchBar.tsx
 import React, { useState } from 'react';
 import styles from './SearchBar.module.scss'; // Create a CSS module for styling
+import fuzzysort from 'fuzzysort';
+import { table } from 'console';
+import { resourceLimits } from 'worker_threads';
+
 
 type SearchBarProps = {
-  onSearch: (query: string) => void;
+  // tableData: Array>;
+  // updateData: (stuff) => {};
 };
 
-const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
+const SearchBar: React.FC<SearchBarProps> = ({ tableData, updateData }) => {
   const [searchQuery, setSearchQuery] = useState<string>('');
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -14,7 +19,29 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   };
 
   const handleSearch = () => {
-    onSearch(searchQuery);
+    let results = fuzzysort.go(searchQuery, tableData, {
+      // Change "claim" to the name of the key for methods
+      // eg: keys: ["SE Methods"]
+      // eg: keys: ["methods"]
+      keys: ["claim"]
+    })
+    console.log(results)
+
+    let counter = 0;
+    tableData.forEach(element => {
+        element.display = false;
+    });
+    tableData.forEach(element => {
+      results.forEach(result => {
+        if (element.id == result.obj.id) {
+          element.display = true;
+        }
+      })
+    })
+
+    // console.log(results)
+    updateData([...tableData ])
+
   };
 
   return (
