@@ -3,6 +3,7 @@ import { GetStaticProps, NextPage } from "next";
 import SortableTable from "../../components/table/SortableTable";
 import data from "../../utils/dummydata.json";
 import SearchBar from "@/components/nav/SearchBar";
+import RejectArticle from "@/components/RejectArticle";
 
 interface ArticlesInterface {
     id: string;
@@ -74,11 +75,11 @@ interface ArticlesInterface {
           doi: article.doi,
           claim: article.claim,
           evidence: article.evidence,
-          accept: <div><button>Accept</button></div>,
-          reject: <div><button>Reject</button></div>,
+          accept: false,
+          reject: false,
           display: true,
         }));
-      
+       
 
       const [articleaDta, setArticle] = useState(articledata);
 
@@ -99,7 +100,7 @@ interface ArticlesInterface {
           ))}
         </div>
         <SearchBar tableData={articleaDta} updateData={setArticle} />
-        <SortableTable headers={filteredHeaders} data={articleaDta} />
+        <SortableTable headers={filteredHeaders} data={articleaDta} updateData={setArticle} />
       </div>
     );
   };

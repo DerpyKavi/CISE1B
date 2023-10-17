@@ -1,14 +1,14 @@
 // SearchBar.tsx
-import React, { useState } from 'react';
+import React, { SetStateAction, useState } from 'react';
 import styles from './SearchBar.module.scss'; // Create a CSS module for styling
 import fuzzysort from 'fuzzysort';
 import { table } from 'console';
 import { resourceLimits } from 'worker_threads';
-
+import { ArticlesInterface } from '@/pages/articles';
 
 type SearchBarProps = {
-  // tableData: Array>;
-  // updateData: (stuff) => {};
+  tableData: Array<any>;
+  updateData: (value: Array<any>) => void;
 };
 
 const SearchBar: React.FC<SearchBarProps> = ({ tableData, updateData }) => {
