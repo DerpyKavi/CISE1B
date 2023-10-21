@@ -1,7 +1,8 @@
-import { GetStaticProps, NextPage } from "next";
-import SortableTable from "../../components/table/SortableTable";
-import data from "../../utils/dummydata.json";
+import { GetStaticProps, NextPage } from 'next';
+import SortableTable from '../../components/table/SortableTable';
+import axios from 'axios';
 
+// Define the ArticlesInterface interface before importing it
 interface ArticlesInterface {
   id: string;
   title: string;
@@ -14,7 +15,29 @@ interface ArticlesInterface {
 }
 
 type ArticlesProps = {
-  articles: ArticlesInterface[];
+  articles: ArticlesInterface[];
+};
+
+export const getStaticProps: GetStaticProps<ArticlesProps> = async () => {
+  try {
+    const response = await axios.get('http://localhost:8082/api/books');
+
+    const articles = response.data;
+
+    return {
+      props: {
+        articles,
+      },
+    };
+  } catch (error) {
+    console.error('Error fetching data:', error);
+
+    return {
+      props: {
+        articles: [],
+      },
+    };
+  }
 };
 
 const Articles: NextPage<ArticlesProps> = ({ articles }) => {
@@ -25,7 +48,7 @@ const Articles: NextPage<ArticlesProps> = ({ articles }) => {
     { key: "pubyear", label: "Publication Year" },
     { key: "doi", label: "DOI" },
     { key: "claim", label: "Claim" },
-    { key: "evidence", label: "Evidence" },
+    { key: "evidence", label: "Evidence" },
   ];
 
   return (
@@ -37,25 +60,5 @@ const Articles: NextPage<ArticlesProps> = ({ articles }) => {
   );
 };
 
-export const getStaticProps: GetStaticProps<ArticlesProps> = async (_) => {
-  // Map the data to ensure all articles have consistent property names
-  const articles = data.articles.map((article) => ({
-    id: article.id ?? article._id,
-    title: article.title,
-    authors: article.authors,
-    source: article.source,
-    pubyear: article.pubyear,
-    doi: article.doi,
-    claim: article.claim,
-    evidence: article.evidence,
-  }));
-
-
-  return {
-    props: {
-      articles,
-    },
-  };
-};
-
 export default Articles;
+
