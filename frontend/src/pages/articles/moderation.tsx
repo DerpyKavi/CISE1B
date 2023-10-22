@@ -1,3 +1,4 @@
+//imports
 import React, {useState} from "react";
 import { GetStaticProps, NextPage } from "next";
 import SortableTable from "../../components/table/SortableTable";
@@ -5,6 +6,7 @@ import data from "../../utils/dummydata.json";
 import SearchBar from "@/components/nav/SearchBar";
 import RejectArticle from "@/components/RejectArticle";
 
+//defines variables
 interface ArticlesInterface {
     id: string;
     title: string;
@@ -24,6 +26,7 @@ interface ArticlesInterface {
 
   };
   
+  //defines which columns to display by default
   const defaultColumnsToShow = [
     "title",
     "authors",
@@ -83,6 +86,7 @@ interface ArticlesInterface {
 
       const [articleaDta, setArticle] = useState(articledata);
 
+    //return UI for moderation page
     return (
       <div className="container">
         <h1>Moderation Page</h1>

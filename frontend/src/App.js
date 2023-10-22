@@ -1,6 +1,6 @@
+//imports
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
-
 import CreateNewBook from './pages/articles/new.js';
 
 const App = () => {

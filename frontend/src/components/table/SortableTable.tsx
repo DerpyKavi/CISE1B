@@ -1,8 +1,10 @@
+//imports
 import React from "react";
 import RejectArticle from "../RejectArticle";
 import AcceptAricle from "../AcceptAricle";
 import Rating from "../Rating";
 
+//Display table
 interface SortableTableProps {
   headers: { key: string; label: string }[];
   data: any[];
@@ -15,6 +17,7 @@ const SortableTable: React.FC<SortableTableProps> = ({ headers, data, updateData
     return <div>No data available</div>;
   }
 
+  //return the UI of the sortable table
   return (
     <table>
       <thead>

@@ -17,11 +17,12 @@ export async function getServerSideProps() {
   };
 }
 
+//define variables
 export interface ArticlesInterface {
   id: string;
   title: string;
   authors: string;
-  pubyear: string;
+  pubyear: Date;
   source: string;
   claim: string;
   evidence: string;
@@ -34,6 +35,7 @@ type ArticlesProps = {
   articles: ArticlesInterface[];
 };
 
+//defines which columns are displayed
 const defaultColumnsToShow = [
   "title",
   "authors",
@@ -61,6 +63,7 @@ const Articles: React.FC<ArticlesProps> = ({ articles }) => {
 
   const [columnsToShow, setColumnsToShow] = useState(defaultColumnsToShow);
 
+  //hide columms if the title is toggled
   const handleColumnToggle = (columnKey: keyof ArticlesInterface) => {
     if (columnsToShow.includes(columnKey)) {
       setColumnsToShow(columnsToShow.filter((key) => key !== columnKey));
@@ -72,19 +75,14 @@ const Articles: React.FC<ArticlesProps> = ({ articles }) => {
   const filteredHeaders = headers.filter((header) =>
     columnsToShow.includes(header.key)
   );
-
-  //displaying table data from dummydata
-
-  // console.log(articles);
-  // let requestData = [];
-
+  
+  //defines which variables to display
   const articleData = articles.map((article) => ({
-    id: article.id ?? article._id,
+    id: article.id,
     title: article.title,
     authors: article.authors,
     source: article.source,
-    pubyear: article.updated_date ? article.updated_date.split("T")[0] : "2023",
-    doi: article.doi,
+    pubyear: article.pubyear,
     claim: article.claim,
     evidence: article.evidence,
     rating: article.rating ? article.rating : 0,
@@ -94,6 +92,7 @@ const Articles: React.FC<ArticlesProps> = ({ articles }) => {
   const [articleaDta, setArticle] = useState(articleData);
   // localStorage.setItem("articleData", articleaDta);
 
+  //return the article display UI
   return (
     <div className="container">
       <h1>Articles Index Page</h1>

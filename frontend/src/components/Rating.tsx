@@ -10,6 +10,7 @@ interface RatingProps {
 
 export default function Rating<RatingProps>({ rating, id, update}) {
     let stars = [];
+
     for (let i = 1; i <= 5; i++) {
         if (i <= rating) {
             stars.push(useState(true));
@@ -24,6 +25,7 @@ export default function Rating<RatingProps>({ rating, id, update}) {
             if (currIndex <= index) {
                 element[1](true);
                 rate++;
+                console.log(rate);
             } else {
                 element[1](false);
             }
@@ -33,6 +35,7 @@ export default function Rating<RatingProps>({ rating, id, update}) {
             prev.forEach(element => {
                 if (element.id == id) {
                     element.rating = rate;
+                    
                     axios.put(`http://localhost:8082/api/books/${element.id}`, element)
                         .catch((err) => {
                             console.log(err)

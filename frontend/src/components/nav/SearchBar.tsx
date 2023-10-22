@@ -1,16 +1,17 @@
 // SearchBar.tsx
+
+//imports
 import React, { SetStateAction, useState } from 'react';
 import styles from './SearchBar.module.scss'; // Create a CSS module for styling
 import fuzzysort from 'fuzzysort';
-import { table } from 'console';
-import { resourceLimits } from 'worker_threads';
-import { ArticlesInterface } from '@/pages/articles';
 
+//define variables
 type SearchBarProps = {
   tableData: Array<any>;
   updateData: (value: Array<any>) => void;
 };
 
+//search bar function
 const SearchBar: React.FC<SearchBarProps> = ({ tableData, updateData }) => {
   const [searchQuery, setSearchQuery] = useState<string>('');
 
@@ -25,8 +26,10 @@ const SearchBar: React.FC<SearchBarProps> = ({ tableData, updateData }) => {
       // eg: keys: ["methods"]
       keys: ["claim"]
     })
+    //print results to console
     console.log(results)
 
+    //display searched item
     let counter = 0;
     tableData.forEach(element => {
         element.display = false;
@@ -44,6 +47,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ tableData, updateData }) => {
 
   };
 
+  //return the UI of the search bar
   return (
     <div className={styles.searchBar}>
       <input

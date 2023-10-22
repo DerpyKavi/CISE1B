@@ -1,16 +1,18 @@
+//imports
 import axios from "axios";
 
+//define variables
 type AcceptArticleProps = {
     id: string;
     update: (value: Array<any>) => void;
   };
-  
 
-
+//Defines what to do with accepted articles
 export default function AcceptAricle<AcceptArticleProps>({ id, update }) {
-    const reject = () => {
+    const accept = () => {
         update(prev => {
             prev.forEach(element => {
+                //post the accepted article to the database
                 if (element.id == id) {
                     element.accept = true;
                     element.display = false;
@@ -34,10 +36,10 @@ export default function AcceptAricle<AcceptArticleProps>({ id, update }) {
             return [...prev];
         })
     }
-
+    //display the accept button
     return (
         <div>
-            <button onClick={reject}>Accept</button>
+            <button onClick={accept}>Accept</button>
         </div>
     )
 }
