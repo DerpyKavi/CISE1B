@@ -1,13 +1,16 @@
+//imports
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import { useState } from "react";
 import axios from "axios";
 
+//define variables
 interface RatingProps {
     rating: number;
     id: string;
     update: (val: Array<any>) => void;
 }
 
+//rating function
 export default function Rating<RatingProps>({ rating, id, update}) {
     let stars = [];
 
@@ -18,7 +21,7 @@ export default function Rating<RatingProps>({ rating, id, update}) {
             stars.push(useState(false))
         }
     }
-
+    //if user clicks rating, add a star, else decrease star
     const click = (index : number) => {
         let rate = 0;
         stars.forEach((element, currIndex) => {
@@ -31,6 +34,7 @@ export default function Rating<RatingProps>({ rating, id, update}) {
             }
         })
 
+        //add rating to the database
         update(prev => {
             prev.forEach(element => {
                 if (element.id == id) {
@@ -47,6 +51,7 @@ export default function Rating<RatingProps>({ rating, id, update}) {
         })
     }
 
+    //rating UI
     return (
       <>
         {stars.map((star, index) => {
